@@ -1,5 +1,5 @@
-ARG FROM_TAG="latest"
-FROM docker.io/ubuntu:${FROM_TAG}
+ARG versiontag="latest"
+FROM docker.io/ubuntu:${versiontag}
 
 RUN apt-get update \
     &&  apt-get install -y sudo python3 ansible sshpass \

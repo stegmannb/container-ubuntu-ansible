@@ -12,11 +12,8 @@ name: Create and publish a container image
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  TAGS: >-
-    ${{ github.ref_name }}
-    ${{ github.sha }}
-    ${{ github.run_id }}
   AUTHORS: Bastian Stegmann
+  TAGS:
 
 jobs:
   build:
@@ -26,6 +23,14 @@ jobs:
       contents: read
       packages: write
 
+    strategy:
+      matrix:
+        versiontag:
+          - bionic
+          - focal
+          - jammy
+          - latest
+
     steps:
       # - name: Dump env
       #   run: echo "$TAGS"
@@ -33,9 +38,14 @@ jobs:
       # - name: Dump context
       #   run: echo "${{ env.TAGS }}"
 
-      - name: Add the latest tag
+      - name: Create image tags
         run: |
-          echo "TAGS=${{ env.TAGS }} latest" >> $GITHUB_ENV
+          echo "TAGS=${{ matrix.versiontag }}-${{ github.ref_name }} ${{ matrix.versiontag }}-${{ github.sha }} ${{ matrix.versiontag }}-${{ github.run_id }}" >> $GITHUB_ENV
+        if: ${{ github.ref_name == 'main' }}
+
+      - name: Add the base tag
+        run: |
+          echo "TAGS=${{ matrix.versiontag }}" >> $GITHUB_ENV
         if: ${{ github.ref_name == 'main' }}
 
       - name: Register current timestamp
@@ -65,7 +75,7 @@ jobs:
           containerfiles: |
             ./Containerfile
           build-args: |
-            some_arg=some_value
+            versiontag=${{ matrix.versiontag }}
           tags: ${{ env.TAGS }}
           labels: |
             org.opencontainers.image.source="${{ github.server_url }}/${{ github.repository}}"
