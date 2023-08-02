@@ -29,6 +29,7 @@ jobs:
           - bionic
           - focal
           - jammy
+          - kinetic
           - latest
 
     steps:
