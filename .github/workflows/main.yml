@@ -40,12 +40,11 @@ jobs:
 
       - name: Create image tags
         run: |
-          echo "TAGS=${{ matrix.versiontag }}-${{ github.ref_name }} ${{ matrix.versiontag }}-${{ github.sha }} ${{ matrix.versiontag }}-${{ github.run_id }}" >> $GITHUB_ENV
-        if: ${{ github.ref_name == 'main' }}
+          echo "TAGS=${{ env.TAGS }} ${{ matrix.versiontag }}-${{ github.ref_name }} ${{ matrix.versiontag }}-${{ github.sha }} ${{ matrix.versiontag }}-${{ github.run_id }}" >> $GITHUB_ENV
 
       - name: Add the base tag
         run: |
-          echo "TAGS=${{ matrix.versiontag }}" >> $GITHUB_ENV
+          echo "TAGS=${{ env.TAGS }} ${{ matrix.versiontag }}" >> $GITHUB_ENV
         if: ${{ github.ref_name == 'main' }}
 
       - name: Register current timestamp
