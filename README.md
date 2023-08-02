@@ -1,6 +1,6 @@
-# container-archlinux-ansible
+# container-ubuntu-ansible
 
-An Archlinux container used for testing Ansible roles.
+An Ubuntu container used for testing Ansible roles.
 
 ## Molecule example
 
@@ -9,11 +9,11 @@ driver:
   name: containers
 
 platforms:
-  - name: molecule-archlinux-systemd
-    image: ghcr.io/stegmannb/container-archlinux-ansible:main
+  - name: molecule-ubuntu-systemd
+    image: ghcr.io/stegmannb/container-ubuntu-ansible:main
     pre_build_image: true
     groups:
-      - archlinux
+      - ubuntu
     command: /sbin/init
     tmpfs:
       - /run
@@ -27,12 +27,12 @@ platforms:
 ## Ansible example
 
 ```yaml
-- name: Create Archlinux test container
+- name: Create Ubuntu test container
   containers.podman.podman_container:
-    name: test-archlinux
-    image: ghcr.io/stegmannb/container-archlinux-ansible:main
+    name: test-ubuntu
+    image: ghcr.io/stegmannb/container-ubuntu-ansible:main
     groups:
-      - archlinux
+      - ubuntu
     command: /sbin/init
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
