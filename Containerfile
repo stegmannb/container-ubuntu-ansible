@@ -1,4 +1,5 @@
-FROM docker.io/ubuntu:jammy
+ARG FROM_TAG="latest"
+FROM docker.io/ubuntu:${FROM_TAG}
 
 RUN apt-get update \
     &&  apt-get install -y sudo python3 ansible sshpass \
