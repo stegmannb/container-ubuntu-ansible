@@ -1,4 +1,4 @@
-# container-ubuntu-ansible
+# container-ubuntu-systemd
 
 An Ubuntu container used for testing Ansible roles.
 
@@ -10,7 +10,7 @@ driver:
 
 platforms:
   - name: molecule-ubuntu-systemd
-    image: ghcr.io/stegmannb/container-ubuntu-ansible:main
+    image: ghcr.io/stegmannb/container-ubuntu-systemd:main
     pre_build_image: true
     groups:
       - ubuntu
@@ -30,7 +30,7 @@ platforms:
 - name: Create Ubuntu test container
   containers.podman.podman_container:
     name: test-ubuntu
-    image: ghcr.io/stegmannb/container-ubuntu-ansible:main
+    image: ghcr.io/stegmannb/container-ubuntu-systemd:main
     groups:
       - ubuntu
     command: /sbin/init
