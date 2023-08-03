@@ -7,7 +7,7 @@ Can run with systemd as init.
 
 This repository currently supports the tags `latest`, `kinetic`, `jammy`, `focal` and `bionic`.
 
-The tags follow the conventions of the [official ubuntu docker image](https://hub.docker.com/_/ubuntu).
+The tags follow the conventions of the [official ubuntu docker image](https://hub.docker.com/_/ubuntu). `latest `
 
 ## Podman / Docker example
 
@@ -20,7 +20,7 @@ podman run --interactive --tty ghcr.io/stegmannb/container-ubuntu-ansible:latest
 
 ```bash
 # Create the container with systemd
-podman run --detach --entrypoint /lib/systemd/systemd --cap-add SYS_ADMIN --volume /sys/fs/cgroup:/sys/fs/cgroup:ro --systemd=true ghcr.io/stegmannb/container-ubuntu-ansible:latest
+podman run --detach --entrypoint /sbin/init --cap-add SYS_ADMIN --volume /sys/fs/cgroup:/sys/fs/cgroup:ro --systemd=true ghcr.io/stegmannb/container-ubuntu-ansible:latest
 # Log into the container
 podman exec --latest --interactive --tty /bin/bash
 # Or use short flags
@@ -34,11 +34,11 @@ driver:
   name: containers
 
 platforms:
-  - name: molecule-archlinux-systemd
+  - name: molecule-ubuntu-systemd
     image: ghcr.io/stegmannb/container-ubuntu-ansible:latest
     groups:
-      - archlinux
-    command: /lib/systemd/systemd
+      - ubuntu
+    command: /sbin/init
     tmpfs:
       - /run
       - /tmp
@@ -55,22 +55,22 @@ driver:
   name: containers
 
 platforms:
-  - name: molecule-archlinux-systemd
+  - name: molecule-ubuntu-systemd
     image: ghcr.io/stegmannb/container-ubuntu-ansible:latest
     groups:
-      - archlinux
+      - ubuntu
 ```
 
 ## Ansible systemd example
 
 ```yaml
-- name: Create Archlinux test container
+- name: Create Ubuntu test container
   containers.podman.podman_container:
-    name: test-archlinux
+    name: test-ubuntu
     image: ghcr.io/stegmannb/container-ubuntu-ansible:latest
     groups:
-      - archlinux
-    command: /lib/systemd/systemd
+      - ubuntu
+    command: /sbin/init
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     capabilities:
@@ -80,10 +80,10 @@ platforms:
 ## Ansible example
 
 ```yaml
-- name: Create Archlinux test container
+- name: Create Ubuntu test container
   containers.podman.podman_container:
-    name: test-archlinux
+    name: test-ubuntu
     image: ghcr.io/stegmannb/container-ubuntu-ansible:latest
     groups:
-      - archlinux
+      - ubuntu
 ```
