@@ -7,7 +7,7 @@ Can run with systemd as init.
 
 This repository currently supports the tags `latest`, `kinetic`, `jammy`, `focal` and `bionic`.
 
-The tags follow the conventions of the [official ubuntu docker image](https://hub.docker.com/_/ubuntu). `latest `
+The tags follow the conventions of the [official ubuntu docker image](https://hub.docker.com/_/ubuntu). `latest`
 
 ## Podman / Docker example
 
