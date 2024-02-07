@@ -4,6 +4,7 @@ FROM docker.io/ubuntu:${versiontag}
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        sudo \
+       curl \
        bash \
        python3 \
        software-properties-common \
@@ -22,3 +23,10 @@ RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
 RUN rm -f /lib/systemd/system/systemd*udev* \
   && rm -f /lib/systemd/system/getty.target
+
+RUN curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install linux \
+  --extra-conf "sandbox = false" \
+  --init none \
+  --no-start-daemon \
+  --no-confirm
+ENV PATH="${PATH}:/nix/var/nix/profiles/default/bin"
