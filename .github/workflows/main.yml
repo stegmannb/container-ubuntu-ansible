@@ -30,6 +30,7 @@ jobs:
           - focal
           - jammy
           - kinetic
+          - noble
           - latest
 
     steps:
